@@ -1,19 +1,22 @@
 "------------------------------------------------
 " Configuration
 "------------------------------------------------
-if !exists('g:notes#buffer_name')
-  :let date=system('date +%Y%m%d_%H%M%S')
-  :let g:notes#buffer_name='notes_to_file_'.date
-endif
+function! notes#init()
+  if !exists('g:notes#buffer_name')
+    :let curDate=strftime('%Y%m%d_%H%M%S')
+    :let g:notes#buffer_name='notes_to_file_'.curDate
+  endif
 
-if !exists('g:notes#file_name')
-  :let g:notes#file_name='notes.txt'
-endif
+  if !exists('g:notes#file_name')
+    :let g:notes#file_name='notes.txt'
+  endif
+endfunction
 
 "------------------------------------------------
 " Re-open the notes taking buffer
 "------------------------------------------------
 function! notes#openBuffer()
+  :call notes#init()
   :let v = bufwinnr(g:notes#buffer_name)
   if v>0
     :echo v
